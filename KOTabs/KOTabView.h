@@ -38,5 +38,6 @@
 
 @property (nonatomic) NSInteger index;
 @property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) UIWebView *webView;
 
 @end

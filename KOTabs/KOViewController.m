@@ -38,29 +38,49 @@
 
 @implementation KOViewController
 
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    if (toInterfaceOrientation == UIInterfaceOrientationPortraitUpsideDown)
+    {
+        return NO;
+    }
+    return YES;
+}
+
+- (void)loadView {
+    UIView *view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.view = view;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-	
-	KOTabView *tabView1 = [[KOTabView alloc] initWithFrame:self.view.bounds];
+    
+    CGFloat yOffset = [[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0 ? 20.f : 0;
+	CGRect rect = CGRectMake(0, yOffset, self.view.bounds.size.height, self.view.bounds.size.width-yOffset);
+	KOTabView *tabView1 = [[KOTabView alloc] initWithFrame:rect];
 	[tabView1 setBackgroundColor:[UIColor purpleColor]];
 	[tabView1 setIndex:0];
 	[tabView1 setName:@"tabView1"];
+    [tabView1.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.baidu.com"]]];
 	
-	KOTabView *tabView2 = [[KOTabView alloc] initWithFrame:self.view.bounds];
+	KOTabView *tabView2 = [[KOTabView alloc] initWithFrame:rect];
 	[tabView2 setBackgroundColor:[UIColor greenColor]];
 	[tabView2 setIndex:1];
-	[tabView2 setName:@"tabView1"];
+	[tabView2 setName:@"tabView2"];
+    [tabView2.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.google.com"]]];
 	
-	KOTabView *tabView3 = [[KOTabView alloc] initWithFrame:self.view.bounds];
+	KOTabView *tabView3 = [[KOTabView alloc] initWithFrame:rect];
 	[tabView3 setBackgroundColor:[UIColor purpleColor]];
 	[tabView3 setIndex:2];
-	[tabView3 setName:@"tabView1"];
+	[tabView3 setName:@"tabView3"];
+    [tabView3.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.verycd.com"]]];
 	
 	NSMutableArray *tabViews = [NSMutableArray arrayWithObjects:tabView1, tabView2, tabView3, nil];
 	
-	KOTabs *tabs = [[KOTabs alloc] initWithFrame:self.view.bounds];
+	KOTabs *tabs = [[KOTabs alloc] initWithFrame:rect];
 	[tabs setDelegate:(id<KOTabsDelegate>)self];
 	
 	[tabs setTabViews:tabViews];

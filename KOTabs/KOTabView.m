@@ -39,4 +39,23 @@
 @synthesize index;
 @synthesize name;
 
+- (id)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        _webView = [[UIWebView alloc] initWithFrame:frame];
+        [self addSubview:_webView];
+    }
+    return self;
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    NSLog(@"layoutSubviews, (%f, %f)",self.frame.size.height,self.frame.size.width);
+    
+}
+
+
+
+
 @end
