@@ -1,0 +1,6 @@
+build
+*.modelv3
+*pbxuser
+*.DS_Store
+*.xcworkspace
+xcuserdata
