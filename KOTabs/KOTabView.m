@@ -42,17 +42,13 @@
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        _webView = [[UIWebView alloc] initWithFrame:frame];
+        CGRect webRect = frame;
+        webRect.size.height = 768.f - 33.f - 20.f;      // diff tab bar(33.f) and status bar(20.f)
+        _webView = [[UIWebView alloc] initWithFrame:webRect];
+        _webView.scalesPageToFit = YES;
         [self addSubview:_webView];
     }
     return self;
-}
-
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    
-    NSLog(@"layoutSubviews, (%f, %f)",self.frame.size.height,self.frame.size.width);
-    
 }
 
 

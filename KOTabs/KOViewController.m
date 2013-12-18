@@ -36,6 +36,12 @@
 #import "KOTabs.h"
 #import "KOTabView.h"
 
+@interface KOViewController ()
+
+@property (nonatomic, strong) KOTabs *tabs;
+
+@end
+
 @implementation KOViewController
 
 
@@ -80,14 +86,31 @@
 	
 	NSMutableArray *tabViews = [NSMutableArray arrayWithObjects:tabView1, tabView2, tabView3, nil];
 	
-	KOTabs *tabs = [[KOTabs alloc] initWithFrame:rect];
-	[tabs setDelegate:(id<KOTabsDelegate>)self];
+	self.tabs = [[KOTabs alloc] initWithFrame:rect];
+	[self.tabs setDelegate:(id<KOTabsDelegate>)self];
 	
-	[tabs setTabViews:tabViews];
-	[tabs setActiveBarIndex:0];
-	[tabs setActiveViewIndex:0];
+	[self.tabs setTabViews:tabViews];
+	[self.tabs setActiveBarIndex:0];
+	[self.tabs setActiveViewIndex:0];
 	
-	[self.view addSubview:tabs];
+	[self.view addSubview:self.tabs];
+    
+    UIButton *addButton = [UIButton buttonWithType:UIButtonTypeContactAdd];
+    addButton.frame = CGRectMake(0, 0, 60.f, 60.f);
+    addButton.center = self.view.center;
+    [addButton addTarget:self action:@selector(add:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:addButton];
+}
+
+- (IBAction)add:(id)sender {
+    CGFloat yOffset = [[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0 ? 20.f : 0;
+	CGRect rect = CGRectMake(0, yOffset, self.view.bounds.size.width, self.view.bounds.size.height-yOffset);
+    KOTabView *tabView3 = [[KOTabView alloc] initWithFrame:rect];
+	[tabView3 setBackgroundColor:[UIColor orangeColor]];
+	[tabView3 setIndex:[self.tabs tabViewsCount]-1];
+	[tabView3 setName:@"tabView4"];
+    [tabView3.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://m.youku.com"]]];
+    [self.tabs addTabView:tabView3];
 }
 
 #pragma mark - KOTabbedViewDelegate

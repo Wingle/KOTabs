@@ -84,8 +84,8 @@
 		shadowView.layer.shadowRadius = 6.0f;
 		shadowView.layer.shadowPath = shadowPath.CGPath;
 		
-		tabbedView = [[UIView alloc] initWithFrame:CGRectZero];
-		[tabbedView addSubview:[[UIView alloc] init]];
+		tabbedView = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+		[tabbedView addSubview:[[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)]];
 		
 		rect = self.bounds;
 		rect.size.height -= 33;
@@ -126,7 +126,7 @@
 		if ([buttonViews count])
 			lastButtonViewMaxX = CGRectGetMaxX([[buttonViews lastObject] frame]);
 		
-		UIView *buttonView = [[UIView alloc] init];
+		UIView *buttonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
 		if (index == 0)
 			[buttonView setFrame:CGRectMake(lastButtonViewMaxX, 0, size.width + 45, 28)];
 		else
@@ -354,6 +354,65 @@
 
 - (KOTabView *)activeTabView {
 	return [[self tabViews] objectAtIndex:activeBarIndex];
+}
+
+- (void)addTabView:(KOTabView *)tabView {
+    [self.tabViews addObject:tabView];
+    
+    NSInteger index = [self.buttonViews count];
+    [tabView setFrame:tabbedView.bounds];
+    [tabView setIndex:index];
+    [tabView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
+    
+    CGSize size = [tabView.name sizeWithFont:[UIFont boldSystemFontOfSize:12]];
+    CGFloat lastButtonViewMaxX = 0;
+    
+    if ([self.buttonViews count])
+        lastButtonViewMaxX = CGRectGetMaxX([[buttonViews lastObject] frame]);
+    
+    UIView *buttonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+    if (index == 0)
+        [buttonView setFrame:CGRectMake(lastButtonViewMaxX, 0, size.width + 45, 28)];
+    else
+        [buttonView setFrame:CGRectMake(lastButtonViewMaxX + 45, 0, size.width + 45, 28)];
+    
+    [self.tabbedBar addSubview:buttonView];
+    [self.buttonViews addObject:buttonView];
+    
+    KOTabButton *closeButton = [KOTabButton buttonWithType:UIButtonTypeCustom];
+    [closeButton setFrame:CGRectMake(0, 1, 28, 28)];
+    [closeButton setBackgroundImage:[UIImage imageNamed:@"close-on"] forState:UIControlStateNormal];
+    [closeButton setBackgroundImage:[UIImage imageNamed:@"close-off"] forState:UIControlStateHighlighted];
+    [closeButton setBackgroundImage:[UIImage imageNamed:@"close-off"] forState:UIControlStateSelected];
+    [closeButton setIndex:index];
+    [closeButton addTarget:self action:@selector(closeButtonAtIndex:) forControlEvents:UIControlEventTouchUpInside];
+    [buttonView addSubview:closeButton];
+    
+    KOTabButton *titleButton = [KOTabButton buttonWithType:UIButtonTypeCustom];
+    [titleButton setFrame:CGRectMake(23, 1, size.width + 16, 28)];
+    [titleButton setIndex:index];
+    
+    [titleButton.titleLabel setFont:KOFONT_TAB_TITLE_ACTIVE];
+    [titleButton setTitleColor:KOCOLOR_TAB_TITLE_ACTIVE forState:UIControlStateNormal];
+    [titleButton setTitleShadowColor:KOCOLOR_TAB_TITLE_ACTIVE_SHADOW forState:UIControlStateNormal];
+    [titleButton.titleLabel setShadowOffset:CGSizeMake(0, 1)];
+    
+    [titleButton setTitle:tabView.name forState:UIControlStateNormal];
+    
+    [titleButton addTarget:self action:@selector(selectButtonAtIndex:) forControlEvents:UIControlEventTouchUpInside];
+    [buttonView addSubview:titleButton];
+    
+    size = tabbedBar.contentSize; //=
+    size.width = CGRectGetMaxX(buttonView.frame);
+    tabbedBar.contentSize = size;
+    
+    [self setActiveBarIndex:index];
+    [self setActiveViewIndex:index];
+    
+}
+
+- (NSUInteger)tabViewsCount {
+    return [_tabViews count];
 }
 
 @end

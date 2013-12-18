@@ -59,4 +59,6 @@
 - (void)selectButtonAtIndex:(id)sender;
 - (KOTabView *)activeTabView;
 
+- (void)addTabView:(KOTabView *)tabView;
+- (NSUInteger) tabViewsCount;
 @end
