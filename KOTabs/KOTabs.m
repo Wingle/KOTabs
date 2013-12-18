@@ -67,15 +67,16 @@
         [tabbedBar setShowsVerticalScrollIndicator:NO];
         [tabbedBar setShowsHorizontalScrollIndicator:NO];
 		
+        CGFloat tabbedBarWidth = 1024.f -100.f;
 		CGRect rect = tabbedBar.frame;
 		rect.size.height = 33;
+        rect.size.width = tabbedBarWidth;
 		tabbedBar.frame = rect;
 		
 		shadowView = [[UIView alloc] initWithFrame:rect];
 		[shadowView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
 		
         rect = shadowView.bounds;
-        rect.size.width = 1024;
 		UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:rect];
 		shadowView.layer.masksToBounds = NO;
 		shadowView.layer.shadowColor = [UIColor blackColor].CGColor;
@@ -93,6 +94,21 @@
 		tabbedView.frame = rect;
 		
 		[tabbedView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
+        
+        
+        UIView *platFormView = [[UIView alloc] initWithFrame:CGRectMake(tabbedBarWidth, 0, 140.f, 33)];
+        platFormView.backgroundColor = [UIColor clearColor];
+        [self addSubview:platFormView];
+        
+        UIButton *addButton = [UIButton buttonWithType:UIButtonTypeContactAdd];
+        addButton.frame = CGRectMake(5.f, 0, 33.f, 33.f);
+        [addButton addTarget:self action:@selector(add:) forControlEvents:UIControlEventTouchUpInside];
+        [platFormView addSubview:addButton];
+        
+        UIButton *closeButton = [UIButton buttonWithType:UIButtonTypeContactAdd];
+        closeButton.frame = CGRectMake(addButton.frame.origin.x+addButton.frame.size.width+10.f, 0, 33.f, 33.f);
+        [closeButton addTarget:self action:@selector(close:) forControlEvents:UIControlEventTouchUpInside];
+        [platFormView addSubview:closeButton];
 		
 		[self addSubview:tabbedView];
 		[self addSubview:shadowView];
@@ -228,7 +244,6 @@
     rectRightCanc.origin.x = CGRectGetMaxX(buttonView.frame);
 	rectRightCanc.size.width = rightX - self.frame.size.width;
 	
-	
 	[UIView beginAnimations:nil context:nil];
 	[UIView setAnimationDuration:0.3];
 	[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
@@ -245,18 +260,18 @@
 - (void)setActiveViewIndex:(NSInteger)_activeViewIndex {
 	activeViewIndex = _activeViewIndex;
 	
-	[[self.tabViews objectAtIndex:activeViewIndex] setAlpha:0];
+	[[self.tabViews objectAtIndex:activeViewIndex] setAlpha:1];
 	[tabbedView addSubview:[self.tabViews objectAtIndex:activeViewIndex]];
     [[self.tabViews objectAtIndex:activeViewIndex] setFrame:tabbedView.bounds];
 	
-	[UIView beginAnimations:nil context:nil];
-	[UIView setAnimationDuration:0.3];
-	[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-	
-	[[[tabbedView subviews] objectAtIndex:0] setAlpha:0];
-	[[[tabbedView subviews] objectAtIndex:1] setAlpha:1];
-	
-	[UIView commitAnimations];
+//	[UIView beginAnimations:nil context:nil];
+//	[UIView setAnimationDuration:0.3];
+//	[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+//	
+////	[[[tabbedView subviews] objectAtIndex:0] setAlpha:0];
+////	[[[tabbedView subviews] objectAtIndex:1] setAlpha:1];
+//	
+//	[UIView commitAnimations];
 	
 	[[[tabbedView subviews] objectAtIndex:0] removeFromSuperview];
 	
@@ -413,6 +428,28 @@
 
 - (NSUInteger)tabViewsCount {
     return [_tabViews count];
+}
+
+- (IBAction)add:(id)sender {
+    if ([self tabViewsCount] >= 8) {
+        UIAlertView *alter = [[UIAlertView alloc] initWithTitle:@"Tips"
+                                                        message:@"There are too much tabs, please close some."
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil, nil];
+        [alter show];
+        return;
+    }
+    KOTabView *tabView3 = [[KOTabView alloc] initWithFrame:self.bounds];
+	[tabView3 setBackgroundColor:[UIColor orangeColor]];
+	[tabView3 setIndex:[self tabViewsCount]-1];
+	[tabView3 setName:@"Home Page"];
+    [tabView3.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.google.com"]]];
+    [self addTabView:tabView3];
+}
+
+- (IBAction)close:(id)sender {
+    NSLog(@"Do something.");
 }
 
 @end
