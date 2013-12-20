@@ -34,7 +34,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface KOTabView : UIView
+@interface KOTabView : UIView <UIWebViewDelegate, UITextFieldDelegate>
 
 @property (nonatomic) NSInteger index;
 @property (nonatomic, strong) NSString *name;
