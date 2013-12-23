@@ -35,10 +35,14 @@
 #import <UIKit/UIKit.h>
 #import "NJKWebViewProgress.h"
 
+@class KOTabButton;
+
 @interface KOTabView : UIView <UIWebViewDelegate, UITextFieldDelegate, NJKWebViewProgressDelegate>
 
 @property (nonatomic) NSInteger index;
-@property (nonatomic, strong) NSString *name;
+@property (nonatomic, copy) NSString *name;
 @property (nonatomic, strong) UIWebView *webView;
+@property (nonatomic, njk_weak) KOTabButton *closeButton;
+@property (nonatomic, njk_weak) KOTabButton *titleButton;
 
 @end

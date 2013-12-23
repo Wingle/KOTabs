@@ -35,6 +35,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "KOTabView.h"
 #import "NJKWebViewProgressView.h"
+#import "KOTabButton.h"
 
 @interface KOTabView ()
 @property (nonatomic, strong) UIButton *backBtn;
@@ -53,7 +54,6 @@
 @implementation KOTabView
 
 @synthesize index;
-@synthesize name;
 
 #pragma mark - Init Methods
 
@@ -264,6 +264,11 @@
     rotationAnimation.repeatCount = repeat;
     
     [view.layer addAnimation:rotationAnimation forKey:@"rotationAnimation"];
+}
+
+- (void)setName:(NSString *)name {
+    _name = [name copy];
+    [self.titleButton setTitle:name forState:UIControlStateNormal];
 }
 
 #pragma mark - UIWebView Delegate Methods

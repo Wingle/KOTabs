@@ -159,6 +159,7 @@
 		[closeButton setIndex:index];
 		[closeButton addTarget:self action:@selector(closeButtonAtIndex:) forControlEvents:UIControlEventTouchUpInside];
 		[buttonView addSubview:closeButton];
+        v.closeButton = closeButton;
 		
 		KOTabButton *titleButton = [KOTabButton buttonWithType:UIButtonTypeCustom];
 		[titleButton setFrame:CGRectMake(23, 1, size.width + 16, 28)];
@@ -167,11 +168,14 @@
 		[titleButton.titleLabel setFont:KOFONT_TAB_TITLE_ACTIVE];
 		[titleButton setTitleColor:KOCOLOR_TAB_TITLE_ACTIVE forState:UIControlStateNormal];
 		[titleButton setTitleShadowColor:KOCOLOR_TAB_TITLE_ACTIVE_SHADOW forState:UIControlStateNormal];
-		[titleButton.titleLabel setShadowOffset:CGSizeMake(0, 1)];
+//		[titleButton.titleLabel setShadowOffset:CGSizeMake(0, 1)];
+        v.titleButton = titleButton;
 		
 		
 
 		[titleButton setTitle:v.name forState:UIControlStateNormal];
+        [titleButton.titleLabel setLineBreakMode:NSLineBreakByTruncatingTail];
+        [titleButton.titleLabel setTextAlignment:0];
 		
 		[titleButton addTarget:self action:@selector(selectButtonAtIndex:) forControlEvents:UIControlEventTouchUpInside];
 		[buttonView addSubview:titleButton];
@@ -402,6 +406,7 @@
     [closeButton setIndex:index];
     [closeButton addTarget:self action:@selector(closeButtonAtIndex:) forControlEvents:UIControlEventTouchUpInside];
     [buttonView addSubview:closeButton];
+    tabView.closeButton = closeButton;
     
     KOTabButton *titleButton = [KOTabButton buttonWithType:UIButtonTypeCustom];
     [titleButton setFrame:CGRectMake(23, 1, size.width + 16, 28)];
@@ -410,12 +415,14 @@
     [titleButton.titleLabel setFont:KOFONT_TAB_TITLE_ACTIVE];
     [titleButton setTitleColor:KOCOLOR_TAB_TITLE_ACTIVE forState:UIControlStateNormal];
     [titleButton setTitleShadowColor:KOCOLOR_TAB_TITLE_ACTIVE_SHADOW forState:UIControlStateNormal];
-    [titleButton.titleLabel setShadowOffset:CGSizeMake(0, 1)];
+//    [titleButton.titleLabel setShadowOffset:CGSizeMake(0, 1)];
     
     [titleButton setTitle:tabView.name forState:UIControlStateNormal];
+    [titleButton.titleLabel setLineBreakMode:NSLineBreakByTruncatingTail];
     
     [titleButton addTarget:self action:@selector(selectButtonAtIndex:) forControlEvents:UIControlEventTouchUpInside];
     [buttonView addSubview:titleButton];
+    tabView.titleButton = titleButton;
     
     size = tabbedBar.contentSize; //=
     size.width = CGRectGetMaxX(buttonView.frame);
