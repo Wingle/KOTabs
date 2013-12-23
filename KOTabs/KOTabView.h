@@ -33,8 +33,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NJKWebViewProgress.h"
 
-@interface KOTabView : UIView <UIWebViewDelegate, UITextFieldDelegate>
+@interface KOTabView : UIView <UIWebViewDelegate, UITextFieldDelegate, NJKWebViewProgressDelegate>
 
 @property (nonatomic) NSInteger index;
 @property (nonatomic, strong) NSString *name;

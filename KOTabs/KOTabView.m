@@ -32,7 +32,9 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+#import <QuartzCore/QuartzCore.h>
 #import "KOTabView.h"
+#import "NJKWebViewProgressView.h"
 
 @interface KOTabView ()
 @property (nonatomic, strong) UIButton *backBtn;
@@ -43,7 +45,8 @@
 @property (nonatomic, strong) UITextField *addressTextField;
 @property (nonatomic, strong) UIButton *stopOrReloadBtn;
 @property (nonatomic, copy) NSURL *urlToLoad;
-
+@property (nonatomic, strong) NJKWebViewProgressView *progressView;
+@property (nonatomic, strong) NJKWebViewProgress *progressProxy;
 
 @end
 
@@ -58,9 +61,21 @@
     self = [super initWithFrame:frame];
     if (self) {
         CGRect rect = frame;
+        rect.origin.y = 0;
         rect.size.height = 33.f;
         UIView *platFormView = [[UIView alloc] initWithFrame:rect];
         [platFormView setBackgroundColor:[UIColor whiteColor]];
+        
+        rect.origin.y = 31.f;
+        rect.size.height = 1.f;
+        UIView *shadowView = [[UIView alloc] initWithFrame:rect];
+        [shadowView setBackgroundColor:[UIColor lightGrayColor]];
+        shadowView.alpha = 0.8f;
+        shadowView.layer.shadowColor = [UIColor blackColor].CGColor;
+        shadowView.layer.shadowOpacity = 1.f;
+        shadowView.layer.shadowRadius = 2.f;
+        shadowView.layer.shadowOffset = CGSizeMake(0, 0);
+        [platFormView addSubview:shadowView];
         
         CGFloat xOffset = 10.f;
         CGFloat buttonWidth = 60.f;
@@ -130,8 +145,9 @@
         self.addressTextField.delegate = self;
         
         self.stopOrReloadBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        self.stopOrReloadBtn.bounds = CGRectMake(0, 0, 30.f, 30.f);
+        self.stopOrReloadBtn.bounds = CGRectMake(0, 0, 13.f, 15.f);
         self.stopOrReloadBtn.showsTouchWhenHighlighted = NO;
+        [self.stopOrReloadBtn setImage:[UIImage imageNamed:@"AddressViewReload"] forState:UIControlStateNormal];
         [self.stopOrReloadBtn addTarget:self action:@selector(reloadOrStop:) forControlEvents:UIControlEventTouchUpInside];
         self.addressTextField.rightView = self.stopOrReloadBtn;
         self.addressTextField.rightViewMode = UITextFieldViewModeUnlessEditing;
@@ -146,6 +162,16 @@
         _webView.scalesPageToFit = YES;
         _webView.delegate = self;
         [self addSubview:_webView];
+        
+        _progressProxy = [[NJKWebViewProgress alloc] init];
+        _webView.delegate = _progressProxy;
+        _progressProxy.webViewProxyDelegate = self;
+        _progressProxy.progressDelegate = self;
+        
+        CGFloat progressBarHeight = 2.5f;
+        CGRect barFrame = CGRectMake(0, 30.f, rect.size.width, progressBarHeight);
+        _progressView = [[NJKWebViewProgressView alloc] initWithFrame:barFrame];
+        [self addSubview:_progressView];
         
         [self updateLoadingStatus];
     }
@@ -179,17 +205,24 @@
 }
 
 - (IBAction)reloadOrStop:(id)sender {
-    
+    if (self.webView.loading) {
+        [self.webView stopLoading];
+    }else {
+        [self.webView reload];
+    }
 }
 
 #pragma mark - Function Methods
 
 - (void) updateLoadingStatus {
+    UIImage *image;
     if (self.webView.loading) {
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+        image = [UIImage imageNamed:@"AddressViewStop"];
+        
     } else {
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        image = [UIImage imageNamed:@"AddressViewReload"];
     }
+    [self.stopOrReloadBtn setImage:image forState:UIControlStateNormal];
     
     // update status of back/forward buttons
     self.backBtn.enabled = [self.webView canGoBack];
@@ -221,11 +254,23 @@
     [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
 }
 
+- (void) runSpinAnimationOnView:(UIView*)view duration:(CGFloat)duration rotations:(CGFloat)rotations repeat:(float)repeat;
+{
+    CABasicAnimation* rotationAnimation;
+    rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+    rotationAnimation.toValue = [NSNumber numberWithFloat: M_PI * 2.0 /* full rotation*/ * rotations * duration ];
+    rotationAnimation.duration = duration;
+    rotationAnimation.cumulative = YES;
+    rotationAnimation.repeatCount = repeat;
+    
+    [view.layer addAnimation:rotationAnimation forKey:@"rotationAnimation"];
+}
+
 #pragma mark - UIWebView Delegate Methods
 - (BOOL)webView:(UIWebView *) sender shouldStartLoadWithRequest:(NSURLRequest *) request navigationType:(UIWebViewNavigationType) navigationType {
-    if ([request.URL.absoluteString isEqual:@"about:blank"]) {
-        return NO;
-    }
+//    if ([request.URL.absoluteString isEqual:@"about:blank"]) {
+//        return NO;
+//    }
 
     return YES;
 }
@@ -238,6 +283,8 @@
     // Disable the defaut actionSheet when doing a long press
     [sender stringByEvaluatingJavaScriptFromString:@"document.body.style.webkitTouchCallout='none';"];
     [sender stringByEvaluatingJavaScriptFromString:@"document.documentElement.style.webkitTouchCallout='none';"];
+    
+    self.name = [sender stringByEvaluatingJavaScriptFromString:@"document.title"];
     
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(updateLoadingStatus) object:nil];
     [self performSelector:@selector(updateLoadingStatus) withObject:nil afterDelay:1.];
@@ -263,6 +310,12 @@
     [self.addressTextField resignFirstResponder];
     
     return YES;
+}
+
+#pragma mark - NJKWebViewProgressDelegate
+-(void)webViewProgress:(NJKWebViewProgress *)webViewProgress updateProgress:(float)progress
+{
+    [_progressView setProgress:progress animated:YES];
 }
 
 @end

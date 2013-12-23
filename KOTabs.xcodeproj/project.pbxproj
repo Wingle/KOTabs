@@ -26,6 +26,13 @@
 		669CFA8615CEA93400BEA797 /* filetab-gradient-left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 669CFA7D15CEA93400BEA797 /* filetab-gradient-left@2x.png */; };
 		669CFA8715CEA93400BEA797 /* filetab-gradient-right.png in Resources */ = {isa = PBXBuildFile; fileRef = 669CFA7E15CEA93400BEA797 /* filetab-gradient-right.png */; };
 		669CFA8815CEA93400BEA797 /* filetab-gradient-right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 669CFA7F15CEA93400BEA797 /* filetab-gradient-right@2x.png */; };
+		9812DDFB186433AC0081FD6C /* NJKWebViewProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 9812DDF8186433AC0081FD6C /* NJKWebViewProgress.m */; };
+		9812DDFC186433AC0081FD6C /* NJKWebViewProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9812DDFA186433AC0081FD6C /* NJKWebViewProgressView.m */; };
+		98B7B4511864138B00C72B4C /* AddressViewReload.png in Resources */ = {isa = PBXBuildFile; fileRef = 98B7B44D1864138B00C72B4C /* AddressViewReload.png */; };
+		98B7B4521864138B00C72B4C /* AddressViewReload@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98B7B44E1864138B00C72B4C /* AddressViewReload@2x.png */; };
+		98B7B4531864138B00C72B4C /* AddressViewStop.png in Resources */ = {isa = PBXBuildFile; fileRef = 98B7B44F1864138B00C72B4C /* AddressViewStop.png */; };
+		98B7B4541864138B00C72B4C /* AddressViewStop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98B7B4501864138B00C72B4C /* AddressViewStop@2x.png */; };
+		98B7B4561864165100C72B4C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98B7B4551864165100C72B4C /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +63,15 @@
 		669CFA7D15CEA93400BEA797 /* filetab-gradient-left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "filetab-gradient-left@2x.png"; sourceTree = "<group>"; };
 		669CFA7E15CEA93400BEA797 /* filetab-gradient-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "filetab-gradient-right.png"; sourceTree = "<group>"; };
 		669CFA7F15CEA93400BEA797 /* filetab-gradient-right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "filetab-gradient-right@2x.png"; sourceTree = "<group>"; };
+		9812DDF7186433AC0081FD6C /* NJKWebViewProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJKWebViewProgress.h; sourceTree = "<group>"; };
+		9812DDF8186433AC0081FD6C /* NJKWebViewProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJKWebViewProgress.m; sourceTree = "<group>"; };
+		9812DDF9186433AC0081FD6C /* NJKWebViewProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJKWebViewProgressView.h; sourceTree = "<group>"; };
+		9812DDFA186433AC0081FD6C /* NJKWebViewProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJKWebViewProgressView.m; sourceTree = "<group>"; };
+		98B7B44D1864138B00C72B4C /* AddressViewReload.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AddressViewReload.png; sourceTree = "<group>"; };
+		98B7B44E1864138B00C72B4C /* AddressViewReload@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AddressViewReload@2x.png"; sourceTree = "<group>"; };
+		98B7B44F1864138B00C72B4C /* AddressViewStop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AddressViewStop.png; sourceTree = "<group>"; };
+		98B7B4501864138B00C72B4C /* AddressViewStop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AddressViewStop@2x.png"; sourceTree = "<group>"; };
+		98B7B4551864165100C72B4C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				98B7B4561864165100C72B4C /* QuartzCore.framework in Frameworks */,
 				669CFA4A15CEA04800BEA797 /* UIKit.framework in Frameworks */,
 				669CFA4C15CEA04800BEA797 /* Foundation.framework in Frameworks */,
 				669CFA4E15CEA04800BEA797 /* CoreGraphics.framework in Frameworks */,
@@ -92,6 +109,7 @@
 		669CFA4815CEA04800BEA797 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				98B7B4551864165100C72B4C /* QuartzCore.framework */,
 				669CFA4915CEA04800BEA797 /* UIKit.framework */,
 				669CFA4B15CEA04800BEA797 /* Foundation.framework */,
 				669CFA4D15CEA04800BEA797 /* CoreGraphics.framework */,
@@ -143,6 +161,8 @@
 		669CFA8A15CFD29200BEA797 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				9812DDF6186433AC0081FD6C /* NJKWebViewProgress */,
+				98B7B44C1864138B00C72B4C /* images */,
 				669CFA6C15CEA10800BEA797 /* KOTabButton.h */,
 				669CFA6D15CEA10800BEA797 /* KOTabButton.m */,
 				669CFA6E15CEA10800BEA797 /* KOTabs.h */,
@@ -151,6 +171,28 @@
 				669CFA7415CEA38D00BEA797 /* KOTabView.m */,
 			);
 			name = Classes;
+			sourceTree = "<group>";
+		};
+		9812DDF6186433AC0081FD6C /* NJKWebViewProgress */ = {
+			isa = PBXGroup;
+			children = (
+				9812DDF7186433AC0081FD6C /* NJKWebViewProgress.h */,
+				9812DDF8186433AC0081FD6C /* NJKWebViewProgress.m */,
+				9812DDF9186433AC0081FD6C /* NJKWebViewProgressView.h */,
+				9812DDFA186433AC0081FD6C /* NJKWebViewProgressView.m */,
+			);
+			path = NJKWebViewProgress;
+			sourceTree = "<group>";
+		};
+		98B7B44C1864138B00C72B4C /* images */ = {
+			isa = PBXGroup;
+			children = (
+				98B7B44D1864138B00C72B4C /* AddressViewReload.png */,
+				98B7B44E1864138B00C72B4C /* AddressViewReload@2x.png */,
+				98B7B44F1864138B00C72B4C /* AddressViewStop.png */,
+				98B7B4501864138B00C72B4C /* AddressViewStop@2x.png */,
+			);
+			path = images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -208,11 +250,15 @@
 				669CFA5415CEA04800BEA797 /* InfoPlist.strings in Resources */,
 				669CFA8015CEA93400BEA797 /* close-off.png in Resources */,
 				669CFA8115CEA93400BEA797 /* close-off@2x.png in Resources */,
+				98B7B4531864138B00C72B4C /* AddressViewStop.png in Resources */,
 				669CFA8215CEA93400BEA797 /* close-on.png in Resources */,
 				669CFA8315CEA93400BEA797 /* close-on@2x.png in Resources */,
+				98B7B4541864138B00C72B4C /* AddressViewStop@2x.png in Resources */,
 				669CFA8415CEA93400BEA797 /* filetab-bg.png in Resources */,
 				669CFA8515CEA93400BEA797 /* filetab-gradient-left.png in Resources */,
+				98B7B4511864138B00C72B4C /* AddressViewReload.png in Resources */,
 				669CFA8615CEA93400BEA797 /* filetab-gradient-left@2x.png in Resources */,
+				98B7B4521864138B00C72B4C /* AddressViewReload@2x.png in Resources */,
 				669CFA8715CEA93400BEA797 /* filetab-gradient-right.png in Resources */,
 				669CFA8815CEA93400BEA797 /* filetab-gradient-right@2x.png in Resources */,
 			);
@@ -231,6 +277,8 @@
 				669CFA7115CEA10800BEA797 /* KOTabButton.m in Sources */,
 				669CFA7215CEA10800BEA797 /* KOTabs.m in Sources */,
 				669CFA7515CEA38D00BEA797 /* KOTabView.m in Sources */,
+				9812DDFB186433AC0081FD6C /* NJKWebViewProgress.m in Sources */,
+				9812DDFC186433AC0081FD6C /* NJKWebViewProgressView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

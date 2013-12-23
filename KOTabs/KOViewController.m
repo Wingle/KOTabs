@@ -55,8 +55,16 @@
 }
 
 - (void)loadView {
-    UIView *view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.view = view;
+//    CGRect rect = [[UIScreen mainScreen] bounds];
+//    CGFloat yOffset = [[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0 ? 20.f : 0;
+//    rect.origin.y = yOffset;
+//    UIView *view = [[UIView alloc] initWithFrame:rect];
+//    self.view = view;
+    [super loadView];
+    self.view.backgroundColor = [UIColor whiteColor];
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+        self.view.bounds = CGRectMake(0, -20, self.view.frame.size.width, self.view.frame.size.height );
+    }
 }
 
 - (void)viewDidLoad
@@ -64,8 +72,8 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    CGFloat yOffset = [[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0 ? 20.f : 0;
-	CGRect rect = CGRectMake(0, yOffset, self.view.bounds.size.height, self.view.bounds.size.width-yOffset);
+//    CGFloat yOffset = [[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0 ? 20.f : 0;
+	CGRect rect = CGRectMake(0, 0, self.view.bounds.size.height, self.view.bounds.size.width);
 	KOTabView *tabView1 = [[KOTabView alloc] initWithFrame:rect];
 	[tabView1 setBackgroundColor:[UIColor purpleColor]];
 	[tabView1 setIndex:0];
@@ -77,14 +85,14 @@
 	[tabView2 setIndex:1];
 	[tabView2 setName:@"tabView2"];
     [tabView2.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.google.com"]]];
-	
+
 	KOTabView *tabView3 = [[KOTabView alloc] initWithFrame:rect];
 	[tabView3 setBackgroundColor:[UIColor purpleColor]];
 	[tabView3 setIndex:2];
 	[tabView3 setName:@"tabView3"];
     [tabView3.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.verycd.com"]]];
 	
-	NSMutableArray *tabViews = [NSMutableArray arrayWithObjects:tabView1, tabView2, tabView3, nil];
+	NSMutableArray *tabViews = [NSMutableArray arrayWithObjects:tabView1,tabView2,tabView3, nil];
 	
 	self.tabs = [[KOTabs alloc] initWithFrame:rect];
 	[self.tabs setDelegate:(id<KOTabsDelegate>)self];
